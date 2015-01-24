@@ -6,6 +6,7 @@
 source script/tangle
 
 DOTFILES_ROOT="`pwd`"
+MAXDEPTH=6
 
 set -e
 
@@ -15,7 +16,7 @@ tangle_orgfiles () {
     printf "\033[0;33mtangling org-mode files\033[0m \n"
 
     # Store path from all org files in a bash array
-    orgfiles=( $(find $DOTFILES_ROOT -maxdepth 2 -name '*.org') )
+    orgfiles=( $(find $DOTFILES_ROOT -maxdepth $MAXDEPTH -name '*.org') )
 
     # Files which must not be tangled
     orgignore=(${DOTFILES_ROOT}/README.org)
@@ -63,7 +64,7 @@ install_dotfiles () {
     backup_all=false
     skip_all=false
 
-    for source in `find $DOTFILES_ROOT -maxdepth 2 -name \*.symlink`
+    for source in `find $DOTFILES_ROOT -maxdepth $MAXDEPTH -name \*.symlink`
     do
         dest="$HOME/.`basename \"${source%.*}\"`"
 
